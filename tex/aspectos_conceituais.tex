@@ -1,0 +1,17 @@
+\chapter{Aspectos Conceituais}
+\section{Contextualização}
+A área de operações de uma empresa é a área responsável pelo processo de produção da mesma, ou seja, o processo de transformação responsável por entregar valor aos clientes através de operações realizadas nas matérias-primas \cite{hubka2012theory}. Os elementos que compõem um processo de transformação podem ser observados na Figura \ref{diagramaTransf}. Indicadores de performance para processos produtivos em geral se referem a 5 características da operação: qualidade, custo, confiabilidade, flexibilidade e velocidade \cite{slack2010operations}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{transf}
+	\caption{Elementos de um sistema de transformação \cite{hubka2012theory}.}
+	\label{diagramaTransf}
+\end{figure}
+
+Uma ferramenta que atue no planejamento e controle dos recursos do processo de produção está incluída, pela estrutura proposta em \cite{hubka2012theory}, no sistema de gerência e metas, em oposição ao sistema de informação, onde se encontra o conhecimento operacional relacionado ao processo. Duas atividades importantes e intimamente relacionadas de responsabilidade do sistema de gerência e metas são o planejamento e controle da produção, as quais serão o foco deste trabalho.
+
+\section{Revisão da Literatura}
+Há muitos trabalhos que se ocupam do problema específico da alocação automática de recursos em processos, sem lidar com os aspectos corporativos e estratégicos da aplicação dessas técnicas. Os algoritmos existentes vão desde simples mecanismos de \textit{push} e \textit{pull}, que não levam questões de performance do processo em consideração \cite{russell2004workflow} \cite{dumas2005process} \cite{russell2008work} \cite{pesic2007modelling}, até esforços mais recentes na aplicação de MDPs a este problema, utilizando dados gerados na execução do processo em algoritmos de aprendizagem por reforço. \cite{huang2011reinforcement} \cite{liu2008semi}
+
+Enquanto muitos outros algoritmos para alocação de recursos são estudados no contexto de sistemas computacionais auto-gerenciados, os derivados de MDPs têm apresentado performance consistentemente superior na gerência de processos de negócio, domínio onde há grande variedade na estrutura processual e de métricas. \cite{zhang1995reinforcement}
