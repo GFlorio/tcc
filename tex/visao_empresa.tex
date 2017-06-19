@@ -1,29 +1,27 @@
 \chapter{Especificação}
-Para a especificação do sistema, será utilizada a técnica de pontos de vista do RM-ODP, que se relaciona com o processo de engenharia de software como demonstrado na Figura \ref{rmODP} \cite{Raymond1995}.
+Para a especificação do sistema, será utilizada a técnica de pontos de vista do RM-ODP, que se relaciona com o processo de engenharia de software como demonstrado na Figura~\ref{rmODP}~\cite{Raymond1995}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{rm-odp}
-	\caption{Relação das visões do RM-ODP com o processo de software \cite{Raymond1995}.}
-	\label{rmODP}
+	\caption{Relação das visões do RM-ODP com o processo de software~\cite{Raymond1995}.\label{rmODP}}
 \end{figure}
 
 Deve-se notar que a visão tecnologia não corresponde à implementação de fato do sistema, mas sim à especificação de aspectos diretamente relacionados à implementação, como escolha de fornecedores de componentes e algoritmos específicos utilizados.
 
 \section{Visão Empresa}
-Este sistema atua essencialmente na camada gerencial da operação, tornando o projeto deste, até certo ponto, agnóstico do processo operacional que será gerido. Para efeito de teste e demonstração, porém, será utilizado um processo de referência demonstrado na Figura \ref{preventiva}.
+Este sistema atua essencialmente na camada gerencial da operação, tornando o projeto deste, até certo ponto, agnóstico do processo operacional que será gerido. Para efeito de teste e demonstração, porém, será utilizado um processo de referência demonstrado na Figura~\ref{preventiva}.
 A escolha deste processo se deu por sua relativa simplicidade e a fácil observação do valor que o produto agrega neste contexto.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{preventiva}
-	\caption{Processo de manutenção preventiva de fábrica.}
-	\label{preventiva}
+	\caption{Processo de manutenção preventiva de fábrica.\label{preventiva}}
 \end{figure}
 
-Deste processo, considerando os objetivos operacionais discutidos em \cite{slack2010operations}, pode-se derivar as seguintes métricas para controle de performance:
+Deste processo, considerando os objetivos operacionais discutidos em~\cite{slack2010operations}, pode-se derivar as seguintes métricas para controle de performance:
 \begin{itemize}
-	\item Qualidade, como definido em \cite{wu2005preventive}.
+	\item Qualidade, como definido em~\cite{wu2005preventive}.
 	\item Custo, relacionado à quantidade de tempo que os recursos necessários para a tarefa ficam alocados para a sua realização.
 	\item Lead Time, o tempo entre a identificação da necessidade de manutenção em um equipamento e o final desta manutenção.
 \end{itemize}
