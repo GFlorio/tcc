@@ -1,4 +1,4 @@
-\section{Visão Computação}
+\subsection{Visão Computação}
 O domínio da aplicação pode ser traduzido em um diagrama de domínio~\cite{evans2004domain} como apresentado na Figura~\ref{dominio}.
 
 \begin{figure}[t]
@@ -17,7 +17,7 @@ A partir dos elementos do processo que se deseja automatizar, surge a definiçã
 
 A seguir, cada um desses módulos será detalhado, incluindo-se uma divisão em camadas como descrito em~\cite{evans2004domain}.
 
-\subsection{Módulo Alocação}
+\subsubsection{Módulo Alocação}
 Este módulo é responsável por utilizar o modelo do processo operacional da fábrica criado anteriormente para decidir a alocação ótima dos recursos, considerando a sua disponibilidade, características específicas das tarefas habilitadas e a eficiência de longo prazo do processo.
 
 Dado que o funcionamento adequado deste módulo é necessário para a continuidade da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
@@ -42,7 +42,7 @@ Dado que o funcionamento adequado deste módulo é necessário para a continuida
 	\item \textbf{Saída:} Mudanças a serem efetivamente realizadas nos recursos.
 \end{itemize}
 
-\subsection{Módulo Medição}
+\subsubsection{Módulo Medição}
 Módulo responsável por recolher os dados advindos da execução do processo e calcular as métricas de performance do mesmo, de acordo com as especificações do negócio. Visto que os dados do processo vêm de fontes muito heterogêneas, se justifica um módulo que abstrai essa comunicação, oferecendo uma interface única para acesso às métricas.
 
 As decisões gerenciais a respeito da alocação de recursos e composição de portfólio serão tomadas a partir dos dados gerados por este módulo, portanto é necessário garantir a segurança (safety) do mecanismo de coleta dos dados.
@@ -74,7 +74,7 @@ As decisões gerenciais a respeito da alocação de recursos e composição de p
 	\item \textbf{Saída:} Relatório de métricas de desempenho.
 \end{itemize}
 
-\subsection{Módulo Comunicação}
+\subsubsection{Módulo Comunicação}
 Este módulo é responsável por instruir os agentes operacionais das decisões tomadas a respeito da alocação dos recursos. A diversidade de agentes envolvidos na operação, possivelmente exigindo integração do sistema central com diversos sistemas operacionais, justifica a existência de um módulo para abstrair detalhes dessas comunicações, oferecendo uma interface única para tal.
 
 Dado que o funcionamento adequado deste módulo é necessário para a continuidade da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
@@ -92,7 +92,7 @@ Dado que o funcionamento adequado deste módulo é necessário para a continuida
 	\item \textbf{Saída:} Mensagem para as aplicações operacionais necessárias.
 \end{itemize}
 
-\subsection{Módulo Simulação}
+\subsubsection{Módulo Simulação}
 Módulo responsável por, utilizando o modelo do processo operacional, simular sua performance em cenários arbitrários, de forma a auxiliar a gerência operacional na estimativa de capacidade e otimização do portfólio de recursos, a partir da simulação de cenários com mais ou menos recursos disponíveis.
 
 \begin{figure}[t]
@@ -115,7 +115,7 @@ Módulo responsável por, utilizando o modelo do processo operacional, simular s
 	\item \textbf{Saída:} Relatório de impacto do recurso nos processos.
 \end{itemize}
 
-\subsection{Módulo Gestão de Alocação}
+\subsubsection{Módulo Gestão de Alocação}
 Este módulo é responsável por gerar o modelo computacional do processo produtivo a partir da estrutura do processo e da informação sobre os recursos disponíveis.
 
 \begin{figure}[t]
@@ -131,7 +131,7 @@ Este módulo é responsável por gerar o modelo computacional do processo produt
 	\item \textbf{Saída:} Modelo da operação.
 \end{itemize}
 
-\subsection{Módulo adicional para validação}
+\subsubsection{Módulo adicional para validação}
 Para efeitos de apresentação do sistema e realização dos testes de validação, será desenvolvido um módulo a mais, representando um sistema utilizado pelos agentes operacionais de um processo. Este módulo deverá ser capaz de receber notificações de alocação e registrar relatórios de atividades realizadas.
 
 A figura~\ref{tela_operacional} mostra um protótipo da tela principal da aplicação.
