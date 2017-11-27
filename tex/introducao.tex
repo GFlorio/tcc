@@ -1,18 +1,34 @@
 \chapter{Introdução}
 
 \section{Motivação}
-Segundo um estudo feito pela McKinsey Global Institute\cite{mckinsey2017natural}, a adoção de novas tecnologias voltadas ao aumento de eficiência na produção e consumo de recursos naturais tem potencial para causar uma economia de até 1.6 trilhões de dólares no cenário financeiro mundial até 2035.
-Ainda segundo a McKinsey\cite{mckinsey2015mining}\cite{mckinsey2017natural}, uma parte relevante desses ganhos virá da otimização de processos nas operações comerciais tanto dos produtores quanto dos consumidores destes recursos.
-Neste cenário, evidencia-se a relevância da pesquisa e desenvolvimento em tecnologias voltadas ao aumento de eficiência de operações.
+Segundo~\cite{mckinsey2017natural}, a adoção de novas tecnologias voltadas
+ao aumento de eficiência na produção e consumo de recursos naturais tem potencial 
+para causar uma economia de até 1.6 trilhões de dólares no cenário financeiro mundial 
+até 2035.
+Além disso uma parte relevante desses ganhos virá da otimização de processos nas
+operações comerciais tanto dos produtores quanto dos consumidores destes recursos.
+Neste cenário, evidencia-se a relevância da pesquisa e desenvolvimento em tecnologias
+voltadas ao aumento de eficiência de operações.
 
-Da mesma forma que a automação do trabalho operacional trouxe consistente aumento na produtividade, há indícios de que isso possa ocorrer na camada gerencial das corporações.
-Experimentos realizados em~\cite{gombolay2015decision} com times híbridos de humanos e robôs, em ambiente controlado simulando uma linha de produção, verificaram o impacto da introdução de elementos automáticos na distribuição e coordenação do trabalho.
-Os resultados, apresentados na Figura~\ref{graficoMIT}, mostram que a automação da distribuição do trabalho trouxe ganhos de eficiência operacional e, mais acentuadamente, gerencial, resultante da tomada de decisões melhores e com menor custo.
+Da mesma forma que a automação do trabalho operacional trouxe consistente aumento
+na produtividade, há indícios de que isso possa ocorrer na camada gerencial das corporações.
+Experimentos realizados em~\citeonline{gombolay2015decision} com times híbridos de humanos
+e robôs, em ambiente controlado simulando uma linha de produção, verificaram o impacto
+da introdução de elementos automáticos na distribuição e coordenação do trabalho.
+Os resultados, apresentados na Figura~\ref{graficoMIT}, mostram que a automação da
+distribuição do trabalho trouxe ganhos de eficiência operacional e, mais acentuadamente,
+gerencial, resultante da tomada de decisões melhores e com menor custo.
 
-O impacto econômico da adoção desse tipo de tecnologia pode ser estimado tendo em vista dados da Accenture\cite{accenture} revelando que, em média, 54 por cento do tempo produtivo de gerentes de todos os níveis é gasto em atividades de coordenação e controle de recursos,
-e que ferramentas de automação poderiam diminuir essa proporção para 25 por cento, liberando cerca de 50 homens-hora por mês para cada gerente, além de possíveis ganhos operacionais derivados da melhor qualidade das decisões.
+O impacto econômico da adoção desse tipo de tecnologia pode ser estimado tendo em 
+vista que, em média, 54 por cento do tempo produtivo de gerentes de todos os níveis
+é gasto em atividades de coordenação e controle de recursos~\cite{accenture}, e 
+que ferramentas de automação poderiam diminuir essa proporção para 25 por 
+cento~\cite{accenture}, liberando aproximadamente 50 homens-hora por mês de cada gerente,
+além de possíveis ganhos operacionais derivados da melhor qualidade das decisões.
 
-Assim, um caminho viável para realizar parte dos ganhos econômicos previstos é através de tecnologia de automação de decisão na gestão de operações, o que justifica o desafio técnico de desenvolver tais tecnologias.
+Assim, um caminho viável para realizar parte dos ganhos econômicos previstos é através
+de tecnologia de automação de decisão na gestão de operações, o que justifica o
+desafio técnico de desenvolver tais tecnologias.
 
 \begin{figure}[h]
 	\centering
@@ -21,12 +37,30 @@ Assim, um caminho viável para realizar parte dos ganhos econômicos previstos �
 \end{figure}
 
 \section{Objetivo}
-O objetivo deste trabalho é elaborar um produto para auxiliar a tomada de decisões relacionadas à alocação de recursos em processos operacionais industriais. O produto baseará as decisões nos dados medidos do processo, de forma a prever a configuração de recursos que otimiza as metas da operação.
+O objetivo deste trabalho é elaborar um produto para auxiliar a tomada de decisões
+relacionadas à alocação de recursos em processos operacionais industriais. O produto
+baseará as decisões nos dados medidos do processo, de forma a prever a configuração
+de recursos que otimiza as metas da operação.
+
+Para atingir tais objetivos, o projeto de software se baseará nas técnicas apresentadas
+em~\citeonline{rozanski2011software} para instanciar a arquitetura de referência 
+para sistemas abertos de big data apresentada em \citeonline{chang2015nist}. O 
+problema da otimização de processos será tratado utilizando-se técnicas de planejamento 
+automático, como descrito em \citeonline{ghallab2016automated}.
 
 \section{Revisão da Literatura}
-Há muitos trabalhos que se ocupam do problema específico da alocação automática de recursos em processos, sem lidar com os aspectos corporativos e estratégicos da aplicação dessas técnicas. Os algoritmos existentes vão desde simples mecanismos de \textit{push} e \textit{pull}, que não levam questões de performance do processo em consideração~\cite{russell2004workflow}~\cite{dumas2005process}~\cite{russell2008work}~\cite{pesic2007modelling}, até esforços mais recentes na aplicação de MDPs a este problema, utilizando dados gerados na execução do processo em algoritmos de aprendizagem por reforço.~\cite{huang2011reinforcement}~\cite{liu2008semi}
+Há muitos trabalhos que se ocupam do problema específico da alocação automática de
+recursos em processos, sem lidar com os aspectos corporativos e estratégicos da
+aplicação dessas técnicas. Os algoritmos existentes vão desde simples mecanismos
+de \textit{push} e \textit{pull}, que não levam questões de performance do processo
+em consideração~\cite{russell2004workflow, dumas2005process, russell2008work, pesic2007modelling},
+até esforços mais recentes na aplicação de MDPs a este problema, utilizando dados
+gerados na execução do processo em algoritmos de aprendizagem por reforço.~\cite{huang2011reinforcement, liu2008semi}
 
-Enquanto muitos outros algoritmos para alocação de recursos são estudados no contexto de sistemas computacionais auto-gerenciados, os derivados de MDPs têm apresentado performance consistentemente superior na gerência de processos de negócio, domínio onde há grande variedade na estrutura processual e de métricas.~\cite{zhang1995reinforcement}
+Enquanto muitos outros algoritmos para alocação de recursos são estudados no contexto
+de sistemas computacionais auto-gerenciados, os derivados de MDPs têm apresentado
+performance consistentemente superior na gerência de processos de negócio, domínio
+onde há grande variedade na estrutura processual e de métricas.~\cite{zhang1995reinforcement}
 
 \textbf{**DESENVOLVER MAIS**}
 

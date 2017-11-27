@@ -31,10 +31,10 @@
 
 % ========== ABNT (requer ABNTeX 2) ==========
 %	http://www.ctan.org/tex-archive/macros/latex/contrib/abntex2
-\usepackage[num]{abntex2cite}
+\usepackage[alf]{abntex2cite}
 
 % Forçar o abntex2 a usar [ ] nas referências ao invés de ( )
-\citebrackets[]
+% \citebrackets[]
 
 % ========== Opções do documento ==========
 % Título
@@ -140,7 +140,6 @@
 	\textbf{SGBD} & Sistema Gerenciador de Banco de Dados\\
 \end{tabular}
 \end{pretextualsection}
-
 % ========== Sumário ==========
 \sumario{}
 
@@ -156,7 +155,7 @@
 \include{tex/planejamento}
 
 % ========== Referências ==========
-\bibliographystyle{abntex2-num}
+\bibliographystyle{abntex2-alf}
 \bibliography{refs}
 
 \end{document}
