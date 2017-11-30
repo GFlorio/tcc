@@ -1,0 +1,78 @@
+\chapter{Desenvolvimento do Projeto}
+
+\section{Contexto da aplicação}
+
+Este sistema atua essencialmente na camada gerencial da operação, tornando o
+projeto deste, até certo ponto, agnóstico do processo operacional que será
+gerido. Para efeito de exemplificação, porém, será utilizado um processo de
+referência para manutenção preventiva em uma planta industrial, demonstrado na
+Figura~\ref{preventiva}. A escolha deste processo se deu por sua relativa
+simplicidade e a fácil observação do valor que o sistema agrega neste contexto.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{preventiva}
+	\caption{Processo de manutenção preventiva de fábrica.\label{preventiva}}
+\end{figure}
+
+Deste processo, considerando os objetivos operacionais discutidos
+em \citeonline{slack2010operations}, pode-se derivar as seguintes métricas para
+controle de performance:
+
+\begin{itemize}
+	\item Qualidade, como definido em \citeonline{wu2005preventive}.
+	\item Custo, relacionado à quantidade de tempo que os recursos necessários para a tarefa ficam alocados para a sua realização.
+	\item Lead Time, o tempo entre a identificação da necessidade de manutenção em um equipamento e o final desta manutenção.
+\end{itemize}
+
+O processo representado na Figura~\ref{preventiva} explicita o principal ator
+que deve interagir com o sistema: O gerente da operação. Para este ator, que
+realiza suas atividades de dentro da fábrica, o sistema auxilia na fase de
+alocação de recursos às tarefas, fornecendo boas sugestões de planos de
+alocação para atender às necessidades da operação.
+
+A qualidade de um plano é dada com respeito a métricas anteriormente definidas
+por um gestor de nível mais alto, responsável pelo planejamento estratégico de
+médio e longo prazo da operação. Este ator interage com o sistema em um
+primeiro momento na definição da estrutura do processo e das métricas
+associadas a ele. Posteriormente, este gestor pode consultar indicadores
+agregados baseados nos resultados da execução do processo para planejar
+modificações na estrutura da operação ou em sua capacidade, dependendo das
+previsões de negócio para a demanda.
+
+Os resultados citados, em geral, são armazenados em algum tipo de sistema
+de informação para apoio operacional, o que pode significar de uma planilha
+eletrônica até um sistema completo de ERP\@. Esses dados precisam ser
+informados para que possam ser agregados em indicadores para o gestor
+estratégico. Dado que esta tarefa tipicamente é realizada automaticamente
+através de gatilhos de eventos no sistema fonte dos dados ou periodicamente por
+um software especializado, pode-se incluir estes sistemas de informação entre
+os atores.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{didatico}
+	\caption{Fluxo de informação no caso de uso principal.\label{didatico}}
+\end{figure}
+
+Posto isso, pode-se dividir o software em duas partes em respeito ao uso: As
+funcionalidades voltadas suporte ao planejamento de curto prazo da operação, e
+as voltadas para a estruturação e planejamento de longo prazo. A
+Figura~\ref{didatico} apresenta uma visão simplificada do uso típico do
+sistema, enquanto a Figura~\ref{casosop} e a Figura~\ref{casosest} apresentam
+os diagramas de caso de uso para os dois subsistemas descritos.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{casosop}
+	\caption{Diagrama de casos de uso do subsistema operacional.\label{casosop}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{casosest}
+	\caption{Diagrama de casos de uso do subsistema estratégico.\label{casosest}}
+\end{figure}
+
+Observa-se pelos casos de uso que a necessidade de manter o modelo do processo
+atualizado e sincronizado entre os subsistemas cria a necessidade de alguns casos de uso adicionais, ativados periodicamente.

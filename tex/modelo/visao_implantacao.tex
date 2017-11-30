@@ -1,0 +1,28 @@
+\section{Ponto de vista da implantação}
+
+Para atender os requisitos de segurança e disponibilidade exigidos nos módulos
+computacionais, será utilizada a infraestrutura apresentada na
+Figura~\ref{implantacao}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[]{implantacao}
+	\caption{Diagrama de infraestrutura\label{implantacao}}
+\end{figure}
+
+Neste diagrama se observa a presença de um servidor interno à fábrica,
+necessário para garantir confiabilidade aos módulos Alocação e Comunicação, que
+caso contrário seriam vulneráveis a falhas na conexão da fábrica à internet.  O
+servidor externo agrega informações de performance das operações de diversas
+fábricas de forma a gerar relatórios executivos para utilização na camada
+estratégica.
+
+Decidiu-se utilizar um único servidor interno à fábrica porque, ainda que
+houvesse redundância no servidor de aplicação, o servidor banco de dados ainda
+seria um ponto único de falha. A duplicação em redundância ativa de toda a
+infraestrutura foi considerada muito custosa, mas poderá ser realizada caso
+haja demanda.
+
+Os módulos da aplicação serão implantados na forma de contêineres Docker,
+operando atrás de um servidor \textit{web} Nginx para tratar potenciais
+clientes lentos e servir arquivos estáticos.

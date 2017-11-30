@@ -1,0 +1,20 @@
+\section{Ponto de vista da concorrência}
+
+O principal ponto de atenção que deve ser observado com relação à concorrência
+no projeto é a troca de dados entre os subsistemas operacional e gerencial. A
+comunicação entre processos é feita por HTTP, sendo o componente operacional
+que faz todas as requisições. Assim, o sistema exige apenas que esteja aberta a
+porta 80 no protocolo TCP para conexões de saída no firewall da fábrica, uma
+configuração que, por ser idêntica à utilizada para a web, é comumente
+encontrada na prática.
+
+Ainda assim, em caso de falha na transmissão dos dados de instâncias
+completadas, estas devem continuar salvas no banco de dados para serem
+reenviadas no próximo ciclo. Não é necessária uma política especial de
+recuperação de falhas neste caso, desde que as todas as instâncias enviadas
+sejam inseridas no banco de dados remoto como uma operação atômica.
+
+Como existem potencialmente muitas implantações do subsistema operacional se
+reportando a uma única instância do subsistema estratégico, é preciso que haja
+algum mecanismo para evitar ou tratar colisões nos códigos de instâncias vindos
+das fábricas. A falha em observar este ponto pode causar inconsistências no histórico de instâncias e, por consequência, a geração de modelos incorretos da operação, sobre os quais todas as outras funcionalidades do sistema se apoiam.

@@ -1,0 +1,168 @@
+\chapter{Revisão Teórica}\label{teoria}
+
+\section{Gerência de operações}
+
+\subsection{Operações como sistema de transformação}
+
+A área de operações de uma empresa é a área responsável pelo processo de
+produção da mesma, ou seja, o sistema de transformação responsável por entregar
+valor aos clientes através de operações realizadas nas
+matérias-primas~\cite{hubka2012theory}. Formalmente, um sistema de
+transformação pode ser dividido em subsistemas como ilustrado na
+Figura~\ref{diagramaTransf}.
+
+Os sistemas humano e técnico, em conjunto também denominados sistema executor,
+consistem nas pessoas e máquinas que, através da aplicação de energia,
+materiais e conhecimento, guiam o operando através do processo de
+transformação. Aos componentes do sistema executor será dado o nome de
+\textit{recursos executores}, que serão o foco do que se deseja gerenciar neste
+trabalho. As ações do sistema executor são guiadas pelo ambiente ativo do
+sistema, composto pelo sistema de informação e o sistema de gerência e metas. O
+sistema de gerência e metas define os parâmetros de controle para execução do
+processo, como quais recursos executores devem ser utilizados e quando cada
+etapa deve ser realizada, enquanto o sistema de informação é uma representação
+do conhecimento operacional agregado ao sistema, ou o \textit{know-how}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{transf}
+	\caption{Elementos de um sistema de transformação.
+        Adaptado de \citeonline{hubka2012theory}.\label{diagramaTransf}}
+\end{figure}
+
+A solução proposta, que atua no planejamento e controle dos recursos do
+processo de produção está incluída, pela estrutura proposta em
+\citeonline{hubka2012theory}, no sistema de gerência e metas e, portanto, os
+esforços de automação devem se concentrar em implementar as interfaces
+existentes entre este sistema e o processo.
+
+Duas atividades, importantes e intimamente relacionadas de responsabilidade do
+sistema de gerência e metas, são o planejamento e controle da produção, as
+quais serão o foco deste trabalho.
+
+\subsection{Atividades de planejamento e controle}
+
+As atividades de planejamento e controle se preocupam em conciliar a demanda do
+mercado pelos produtos da empresa com a capacidade da operação de produzi-los.
+Essas atividades se diferenciam principalmente pelo tamanho do intervalo de
+tempo entre a tomada da decisão e o evento afetado por
+ela~\cite{slack2010operations}. Planejamento é uma formalização do que é
+esperado que aconteça em algum ponto no futuro, enquanto o controle pode ser
+considerado como o replanejamento dado que alguma das premissas do plano
+original se mostrou falsa durante sua execução. Observado isso, essas
+atividades serão, pela maior parte deste trabalho, simplesmente tratadas por
+\textit{planejamento}.
+
+Para guiar as decisões envolvidas no planejamento, são definidas metas
+relacionadas a indicadores de performance da operação, cujas características
+variam com o tempo. Planos a longo prazo utilizam indicadores agregados de
+natureza tipicamente financeira, dado que a incerteza da demanda é grande
+demais para realizar previsões detalhadas dos acontecimentos. A curto e médio
+prazo, quando a demanda já é conhecida ou mais facilmente prevista, são
+utilizados indicadores mais granulares, tipicamente mais relacionados à
+qualidade do serviço prestado pela operação. Indicadores de performance para
+processos produtivos em geral se referem a 5 características da operação:
+qualidade, custo, confiabilidade, flexibilidade e
+velocidade~\cite{slack2010operations}.
+
+
+\section{Mineração de processos de negócio}
+
+A execução de um processo de negócio, explícito ou implícito, em ambiente
+corporativo gera traços no formato de um log de eventos, seja por razões de
+controle ou de auditoria. O objetivo da mineração de processos de negócio é
+derivar automaticamente um modelo do processo a partir dos dados de eventos
+gerados por um outro sistema de informação corporativo~\cite{van2016process}.
+Este modelo pode, então, ser utilizado para responder questões a respeito da
+estrutura, da performance e da conformidade do processo a normas estabelecidas.
+A abordagem de construção automática a partir de dados tem o benefício de gerar
+um modelo que é, em geral, mais aderente à realidade do que o gerado
+manualmente. Uma vez que o modelo formal é gerado, podem ser criadas
+representações dele em diferentes níveis de abstração e detalhe, para
+comunicação aos \textit{stakeholders}, sem perder essa propriedade.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{processmining}
+        \caption{Ilustração dos principais tipos de mineração de processos: descoberta, conformidade e melhoria. Adaptado de \citeonline{van2016process}.\label{mineracao}}
+\end{figure}
+
+No log de eventos, as diferentes instâncias do processo que surgem para atender
+as demandas da corporação estão representadas por seus traços: séries de
+eventos com uma identificação comum de instância. Parte importante do desafio
+da mineração é mapear os traços de um mesmo processo a um modelo formal com
+representação de estado que possa ser analisado, por exemplo uma cadeia de
+Markov ou uma rede de Petri estendida.
+
+A Figura~\ref{mineracao} ilustra os principais tipos de mineração de processos,
+apontando diferentes motivações e técnicas comumente inclusas na área. Neste
+modelo, os sistemas de software são conscientes dos processos com os quais
+interagem no ambiente. Conforme o processo de negócio evolui no ambiente,
+gerando novos registros de eventos, o modelo também se modifica, por sua vez
+adaptando o funcionamento dos sistemas de software regidos por ele. O tipo mais
+relevante para este trabalho é a descoberta, com objetivo de construir um
+modelo para prever o comportamento do processo em condições simuladas.
+
+
+\subsection{Modelos Preditivos de Performance de Processo}
+
+Baseado nas técnicas de mineração de processos, há um esforço na criação de
+modelos preditores de desempenho que sejam precisos e adaptáveis o bastante
+para uso no dia-a-dia da operação (vide, por exemplo~\citeonline{van2008cycle}
+e \citeonline{folino2012discovering}). Uma vez criados, tais modelos poderiam ser
+utilizados por exemplo na recomendação de configurações para execução das
+atividades ou notificações de risco de quebra de SLAs.
+
+Para definir formalmente o problema, denote-se alguns
+elementos~\cite{folino2012discovering}:
+
+\begin{itemize}
+        \item Seja $T$ o universo fixo de todos os traços possíveis, representando instâncias completas ou não.
+        \item Seja $L \subset T$ um log.
+        \item Seja $E$ o universo de todos os eventos associados a traços $\tau \in T$ que podem estar contidos em um log.
+        \item Seja $M \in \mathbb{R}^n$ o universo dos valores possíveis para as $n$ métricas de performance do processo.
+\end{itemize}
+
+O problema de definir um modelo de predição de performance é derivar do log $L$
+uma função $\hat{\mu}: T \to M$ que associe a cada traço um valor para cada
+métrica. Define-se ainda um traço $\tau \in T$ como uma tripla $\langle id,
+\bar{a}, s \rangle$, em que $id$ é uma identificação única para a instância do
+processo, $\bar{a}$ é o conjunto de dados associados à instância e $s$ é uma
+sequência de eventos.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{contexto}
+	\caption{Diferentes tipos de contexto do processo.
+        Adaptado de \citeonline{van2016process}.\label{escopos}}
+\end{figure}
+
+Os dados em $\bar{a}$ representam o contexto no qual a instância é executada.
+Este contexto pode incluir informações a respeito da demanda que causou o
+início da instância, variáveis de controle, ou mesmo resultados de atividades
+já concluídas. Além de terem funções e fontes diferentes, essas variáveis
+também têm escopos diferentes. A Figura~\ref{escopos} ilustra essa diversidade
+na natureza do contexto em que os eventos ocorrem e seu efeito na predição de
+resultados.
+
+Sendo $V_a, V_b, \ldots, V_n$ as variáveis às quais se tem acesso em relação ao
+processo, cada uma com um domínio $D_a, D_b, \ldots, D_n$, tem-se que $\bar{a}
+\in D_a \times D_b \times \cdots \times D_n$. Visto que $\hat{\mu}$, por
+definição, está definido para instâncias incompletas, é necessário que sua
+implementação computacional seja capaz de ser calculada na ausência de
+informações ainda não determinadas no processo. As famílias de abordagens mais
+utilizadas para estimar o valor de $m \in M$ em traços de instâncias
+incompletas são~\cite{van2016process}:
+
+\begin{enumerate}
+    \item Associar a cada estado do processo definido por um prefixo de um traço completo um estimador do valor mais provável que $m$ assumirá quando a instância estiver completa.
+    \item Estender o traço, criando eventos simulados de forma a completar a instância, calculando o indicador sobre o traço completo.
+\end{enumerate}
+
+A abordagem utilizada neste trabalho é da família 1, baseada em
+\citeonline{van2016process}, onde o autor utiliza um modelo determinístico de
+transições, cujos estados são anotados com previsões para as métricas
+definidas. Neste trabalho, porém, dado que o objetivo é maximizar as métricas
+através da manipulação de variáveis de controle, cada estado é anotado com um
+modelo de regressão cujo domínio contém apenas as variáveis para as quais há
+valores disponíveis no respectivo ponto do processo.

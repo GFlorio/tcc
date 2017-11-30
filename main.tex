@@ -20,6 +20,7 @@
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{graphicx,cite,enumerate}
 \usepackage{helvet}
+\usepackage[hidelinks]{hyperref}
 
 \renewcommand{\familydefault}{\sfdefault}
 \graphicspath{{fig/}}
@@ -132,11 +133,11 @@
 % ========== Listas definidas pelo usuário (opcional) ==========
 \begin{pretextualsection}{Lista de Abreviações e Siglas}
 \begin{tabular}{ll}
-	\textbf{IA}	& Inteligência Artificial \\
-	\textbf{MDP} & Markov Decision Process \\
-	\textbf{RM-ODP} & Reference Model --- Open Distributed Processing \\
-	\textbf{BI} & Business Intelligence\\
-	\textbf{SPF} & Single Point of Failure\\
+	\textbf{CRUD} & Create, Retrieve, Update, Delete\\
+	\textbf{ERP} & Enterprise Resource Planning\\
+	\textbf{NIST} & National Institute of Standards and Technology\\
+	\textbf{PEP} & Python Enhancement Proposal\\
+	\textbf{SLA} & Service Level Agreement\\
 	\textbf{SGBD} & Sistema Gerenciador de Banco de Dados\\
 \end{tabular}
 \end{pretextualsection}
@@ -145,14 +146,15 @@
 
 % ========== Elementos textuais ==========
 \include{tex/introducao}
-\include{tex/aspectos_conceituais}
+\include{tex/revisao_teorica}
 
-\include{tex/visao_empresa}
-\include{tex/visao_computacao}
-\include{tex/visao_informacao}
-\include{tex/visao_engenharia}
-\include{tex/visao_tecnologia}
-\include{tex/planejamento}
+\include{tex/modelo/visao_contexto}
+\include{tex/modelo/visao_funcional}
+\include{tex/modelo/visao_informacao}
+\include{tex/modelo/visao_concorrencia}
+\include{tex/modelo/visao_implantacao}
+% \include{tex/modelo/visao_desenvolvimento}
+\include{tex/resultados}
 
 % ========== Referências ==========
 \bibliographystyle{abntex2-alf}

@@ -1,0 +1,93 @@
+\section{Ponto de vista funcional}
+
+A partir dos requisitos definidos anteriormente, pode-se derivar uma separação
+do sistema em módulos, apresentados na Figura~\ref{pacotes} e definidos em detalhes a seguir. Os casos de uso que seguem o padrão \textit{CRUD} foram omitidos para preservar a clareza e relevância do modelo.
+
+\paragraph{Arquitetura hexagonal} A estrutura interna de cada módulo segue o
+padrão comumente denominado de \textit{arquitetura
+hexagonal}~\cite{cockburn_hexagonal}~\cite{fowler2015layering}, uma derivação da
+arquitetura clássica em três camadas que utiliza \textit{Data
+Mappers}~\cite{fowler2002patterns} para eliminar dos objetos de domínio a
+dependência da camada de acesso a dados.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[]{pacotes}
+	\caption{Diagrama de pacotes do sistema.\label{pacotes}}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[]{hexagonal}
+        \caption{Diagrama esquemático da arquitetura hexagonal. Adaptado de \citeonline{fowler2015layering}.\label{hexagonal}}
+\end{figure}
+
+\subsection{Módulo Modelagem do Processo}
+
+Este módulo é responsável por gerar o modelo computacional do processo
+produtivo a partir da estrutura do processo e da informação sobre os instâncias passadas do processo. O modelo gerado será, então, utilizado como base para as outras funções do sistema, como o planejamento automático e a geração de relatórios.
+
+\paragraph{Serviço gerar modelo operacional}
+\begin{itemize}
+	\item \textbf{Entradas:} Especificações do processo e dos recursos disponíveis.
+	\item \textbf{Processamento:} Modelagem do processo de forma a tornar computacionalmente eficiente a simulação e análise.
+	\item \textbf{Saída:} Modelo da operação.
+\end{itemize}
+\clearpage
+
+\subsection{Módulo Alocação}
+
+Este módulo é responsável por utilizar o modelo do processo operacional da
+fábrica criado anteriormente para decidir a alocação ótima dos recursos para
+atender a uma dada demanda, considerando a sua disponibilidade, características
+específicas das tarefas habilitadas e a eficiência de longo prazo do processo.
+
+Dado que o funcionamento adequado deste módulo é necessário para a continuidade da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
+
+\paragraph{Serviço planejar automaticamente}
+\begin{itemize}
+	\item \textbf{Entradas:} Demandas a que se deseja atender.
+	\item \textbf{Processamento:} Determinar a melhor alocação dos recursos para atender às novas tarefas e atualizar o modelo interno.
+	\item \textbf{Saída:} Plano otimizado
+\end{itemize}
+
+
+\subsection{Módulo Medição} 
+
+Módulo responsável por recolher os dados
+advindos da execução do processo e calcular as métricas de performance do
+mesmo, de acordo com as especificações do negócio. Visto que os dados do
+processo vêm de fontes muito heterogêneas, se justifica um módulo que abstrai
+essa comunicação, oferecendo uma interface única para acesso às métricas.
+
+As decisões gerenciais a respeito da alocação de recursos e composição de
+portfólio serão tomadas a partir dos dados gerados por este módulo, portanto é
+necessário garantir a segurança (safety) do mecanismo de coleta dos dados.
+
+\paragraph{Serviço relatar atividade realizada}
+\begin{itemize}
+	\item \textbf{Entradas:} Dados dos sensores da operação.
+	\item \textbf{Processamento:} Calcular métricas de qualidade e custo.
+	\item \textbf{Saída:} Registro de relatório da atividade.
+\end{itemize}
+
+\paragraph{Serviço informar instâncias finalizadas}
+\begin{itemize}
+	\item \textbf{Entradas:} Processo a ser processado
+	\item \textbf{Processamento:} Enviar para o subsistema estratégico as informações sobre novas instâncias terminadas do processo.
+	\item \textbf{Saída:} Indicador de sucesso ou falha
+\end{itemize}
+
+\subsection{Módulo Análise de Impacto}
+
+Módulo responsável por, utilizando o modelo do processo operacional, simular
+sua performance em cenários arbitrários, de forma a auxiliar a gerência
+operacional na estimativa de capacidade e otimização do portfólio de recursos,
+a partir da simulação de cenários com mais ou menos recursos disponíveis.
+
+\paragraph{Serviço calcula relatório}
+\begin{itemize}
+	\item \textbf{Entradas:} Intervalo de tempo para o qual calcular os relatórios
+	\item \textbf{Processamento:} Calcular estatísticas de atraso de tarefas, utilização de recursos e eficiência, agregados no tempo.
+	\item \textbf{Saída:} Relatório de desempenho da operação no cenário especificado.
+\end{itemize}
