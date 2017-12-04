@@ -28,8 +28,8 @@ controle de performance:
 O processo representado na Figura~\ref{preventiva} explicita o principal ator
 que deve interagir com o sistema: O gerente da operação. Para este ator, que
 realiza suas atividades de dentro da fábrica, o sistema auxilia na fase de
-alocação de recursos às tarefas, fornecendo boas sugestões de planos de
-alocação para atender às necessidades da operação.
+alocação de recursos executores às tarefas, fornecendo boas sugestões de planos
+de alocação para atender às necessidades da operação.
 
 A qualidade de um plano é dada com respeito a métricas anteriormente definidas
 por um gestor de nível mais alto, responsável pelo planejamento estratégico de
@@ -40,14 +40,25 @@ agregados baseados nos resultados da execução do processo para planejar
 modificações na estrutura da operação ou em sua capacidade, dependendo das
 previsões de negócio para a demanda.
 
-Os resultados citados, em geral, são armazenados em algum tipo de sistema
-de informação para apoio operacional, o que pode significar de uma planilha
+Os resultados citados, em geral, são armazenados em algum tipo de sistema de
+informação para apoio operacional, o que pode significar de uma planilha
 eletrônica até um sistema completo de ERP\@. Esses dados precisam ser
-informados para que possam ser agregados em indicadores para o gestor
+conhecidos para que possam ser agregados em indicadores para o gestor
 estratégico. Dado que esta tarefa tipicamente é realizada automaticamente
 através de gatilhos de eventos no sistema fonte dos dados ou periodicamente por
 um software especializado, pode-se incluir estes sistemas de informação entre
 os atores.
+
+Posto isso, pode-se dividir o software em duas partes em respeito ao uso: As
+funcionalidades voltadas suporte ao planejamento de curto prazo da operação, e
+as voltadas para a estruturação e planejamento de longo prazo. A
+Figura~\ref{didatico} apresenta uma visão simplificada do uso típico do
+sistema. A Figura~\ref{casosop} e a Figura~\ref{casosest} apresentam
+os diagramas de caso de uso para os dois subsistemas descritos.
+
+Observa-se pelos casos de uso que a necessidade de manter o modelo do processo
+atualizado e sincronizado entre os subsistemas cria a necessidade de alguns
+casos de uso adicionais, ativados periodicamente.
 
 \begin{figure}[h]
 	\centering
@@ -55,24 +66,15 @@ os atores.
 	\caption{Fluxo de informação no caso de uso principal.\label{didatico}}
 \end{figure}
 
-Posto isso, pode-se dividir o software em duas partes em respeito ao uso: As
-funcionalidades voltadas suporte ao planejamento de curto prazo da operação, e
-as voltadas para a estruturação e planejamento de longo prazo. A
-Figura~\ref{didatico} apresenta uma visão simplificada do uso típico do
-sistema, enquanto a Figura~\ref{casosop} e a Figura~\ref{casosest} apresentam
-os diagramas de caso de uso para os dois subsistemas descritos.
-
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{casosop}
+	\includegraphics[height=10cm]{casosop}
 	\caption{Diagrama de casos de uso do subsistema operacional.\label{casosop}}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{casosest}
+	\includegraphics[height=10cm]{casosest}
 	\caption{Diagrama de casos de uso do subsistema estratégico.\label{casosest}}
 \end{figure}
 
-Observa-se pelos casos de uso que a necessidade de manter o modelo do processo
-atualizado e sincronizado entre os subsistemas cria a necessidade de alguns casos de uso adicionais, ativados periodicamente.

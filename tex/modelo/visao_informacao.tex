@@ -12,4 +12,60 @@ Figura~\ref{nist}.
 	\caption{Resultado do mapeamento da arquitetura do projeto ao modelo NIST.\label{nist}}
 \end{figure}
 
+O modelo permite observar as características de latência e fluxo de informações
+necessários para o funcionamento adequado de cada módulo. São definidos dois
+elementos necessários para prover os serviços de análise de dados: o provedor
+de estrutura (\textit{Framework Provider}) e o provedor de aplicação
+(\textit{Application Provider}).
+
+As operações que cada módulo deve aplicar sobre os dados estão definidas na
+especificação do provedor de aplicação, da onde se pode derivar características
+da estrutura lógica dos dados para atender os requisitos funcionais do sistema.
+A especificação do provedor de estrutura define \textit{quando} e \textit{como}
+os dados são armazenados e acessados, o que auxilia na quantificação dos
+aspectos não funcionais relacionados à infraestrutura.
+
+\subsection{Estrutura lógica dos dados}
+
+Os módulos do subsistema operacional possuem bancos de dados separados. O
+subsistema de gestão estratégica possui, por razões descritas adiante, um banco
+de dados unificado. A estrutura estrutura lógica de cada um está definida em
+seus diagramas de Entidade-Relacionamento nas
+figuras~\ref{ermod},~\ref{ermed}, e~\ref{eraloc}.
+
+\subsection{Considerações de Escalabilidade}
+
+Fisicamente, é previsto que o tamanho dos bancos de dados do subsistema de
+Gestão Operacional cresça até um ponto de equilíbrio, dependente da
+disponibilidade da conexão de rede com o subsistema de Gestão Estratégica, da
+quantidade de tarefas no processo e na velocidade da operação. Atingido este
+ponto, o espaço necessário para armazenar os dados operacionais deve se manter
+constante.
+
+O banco de dados unificado do subsistema de Gestão Estratégica tem uma
+tendência constante de crescimento, causado pelo armazenamento de dados
+históricos do processo operacional. Isso rege a necessidade de se determinar
+uma política de retenção de dados durante a operação do sistema, a ser definida
+de acordo com a disponibilidade de infraestrutura na implantação. Dado que é
+previsto que o armazenamento deste banco de dados seja uma das maiores fontes
+de custo operacional do sistema, optou-se por não duplicá-la para os dois
+módulos do subsistema Gestão Estratégica.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{ermod}
+	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do módulo Modelagem.\label{ermod}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{ermed}
+	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do módulo Medição.\label{ermed}}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{eraloc}
+	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do subsistema de Gestão Estratégica.\label{eraloc}}
+\end{figure}
 

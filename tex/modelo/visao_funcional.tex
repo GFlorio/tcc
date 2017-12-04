@@ -1,22 +1,27 @@
 \section{Ponto de vista funcional}
 
 A partir dos requisitos definidos anteriormente, pode-se derivar uma separação
-do sistema em módulos, apresentados na Figura~\ref{pacotes} e definidos em detalhes a seguir. Os casos de uso que seguem o padrão \textit{CRUD} foram omitidos para preservar a clareza e relevância do modelo.
+do sistema em módulos, apresentados na Figura~\ref{pacotes} e definidos em
+detalhes a seguir. Os casos de uso que seguem o padrão \textit{CRUD} foram
+omitidos para preservar a clareza e relevância do modelo.
 
-\paragraph{Arquitetura hexagonal} A estrutura interna de cada módulo segue o
-padrão comumente denominado de \textit{arquitetura
-hexagonal}~\cite{cockburn_hexagonal}~\cite{fowler2015layering}, uma derivação da
-arquitetura clássica em três camadas que utiliza \textit{Data
+\subsubsection{Arquitetura hexagonal} 
+
+A estrutura interna de cada módulo segue o padrão comumente denominado de
+\textit{arquitetura
+hexagonal}~\cite{cockburn_hexagonal}~\cite{fowler2015layering}, uma derivação
+da arquitetura clássica em três camadas que utiliza \textit{Data
 Mappers}~\cite{fowler2002patterns} para eliminar dos objetos de domínio a
-dependência da camada de acesso a dados.
+dependência da camada de acesso a dados. A estrutura geral deste padrão
+arquitetural pode ser observada na Figura~\ref{hexagonal}.
 
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\includegraphics[]{pacotes}
 	\caption{Diagrama de pacotes do sistema.\label{pacotes}}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[h]
 	\centering
 	\includegraphics[]{hexagonal}
         \caption{Diagrama esquemático da arquitetura hexagonal. Adaptado de \citeonline{fowler2015layering}.\label{hexagonal}}
@@ -25,69 +30,274 @@ dependência da camada de acesso a dados.
 \subsection{Módulo Modelagem do Processo}
 
 Este módulo é responsável por gerar o modelo computacional do processo
-produtivo a partir da estrutura do processo e da informação sobre os instâncias passadas do processo. O modelo gerado será, então, utilizado como base para as outras funções do sistema, como o planejamento automático e a geração de relatórios.
+operacional a partir da estrutura do processo e da informação sobre os instâncias
+passadas do processo. O modelo gerado será, então, utilizado como base para as
+outras funções do sistema, como o planejamento automático e a geração de
+relatórios.
 
-\paragraph{Serviço gerar modelo operacional}
+\subsubsection{Serviço gerar modelo operacional}
+
 \begin{itemize}
-	\item \textbf{Entradas:} Especificações do processo e dos recursos disponíveis.
-	\item \textbf{Processamento:} Modelagem do processo de forma a tornar computacionalmente eficiente a simulação e análise.
+
+    \item \textbf{Pré-requisitos:} O processo, suas atividades e sua métrica de
+            performance já devem ter sido cadastradas no sistema.
+
+    \item \textbf{Entradas:} Processo para o qual se deseja gerar o modelo
+
+    \item \textbf{Processamento:} Modelagem do processo de forma a tornar
+            computacionalmente eficiente a simulação e análise.
+
 	\item \textbf{Saída:} Modelo da operação.
+
 \end{itemize}
-\clearpage
+
+A sequência de chamadas feita para execução deste serviço é apresentada na
+Figura~\ref{seqmod}. A classe \textit{RepositorioExecucoes} contém a lógica de
+recuperar do banco de dados as informações de instâncias já terminadas do
+processo especificado. Esses dados recuperados consistem do contexto no qual as
+tarefas foram executadas, como definido na Seção~\ref{teo_pred}, e os valores
+obtidos para a métrica definida.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{seqmod}
+        \caption{Diagrama de sequência da geração do modelo operacional.\label{seqmod}}
+\end{figure}
+
+Para o modelo de predição, foi utilizada a implementação da biblioteca
+\textit{scikit-learn}~\cite{scikit-learn} do algoritmo \textit{random
+forest}~\cite{breiman2001random}. A escolha por este algoritmo foi feita por
+causa de sua alta interpretabilidade por humanos e capacidade de elencar a
+importância relativa das variáveis de entrada para a predição, baseado nas
+posições das decisões que as envolvem em cada árvore do conjunto.
+
+Para capturar comportamentos periódicos, quaisquer variáveis que representem
+momentos no tempo são decompostas em:
+
+\begin{itemize}
+    \item Hora do dia;
+    \item Dia da semana;
+    \item Dia do mês;
+    \item Mês do ano;
+\end{itemize}
+
+A informação do ano dos eventos é descartada, visto que, apesar de poder ajudar
+na captura de tendências permanentes, seria preciso dados de muitos anos para
+fazê-lo.
+
+A especificação das métricas de performance operacional é feita através de
+expressões em notação polonesa, onde se pode especificar nomes de variáveis
+que, quando a métrica for calculada, serão substituídas pelo valor da variável
+na instância pertinente. Por exemplo, uma métrica de custo do trabalho para um
+processo de manutenção pode ser especificada:
+
+\textit{\centering custoTrabalho = * manutencionista.custoHora + horasEsforco
+horasLocomocao}
+
+Uma instância do processo que exigiu 1 hora de locomoção 2 horas de esforço e
+foi executada por um recurso que custa R\$25,00 por hora teria o valor $25.00 *
+(1 + 2) = 75.00$.
+
 
 \subsection{Módulo Alocação}
 
 Este módulo é responsável por utilizar o modelo do processo operacional da
-fábrica criado anteriormente para decidir a alocação ótima dos recursos para
+fábrica criado anteriormente para decidir a alocação ótima dos recursos executores para
 atender a uma dada demanda, considerando a sua disponibilidade, características
 específicas das tarefas habilitadas e a eficiência de longo prazo do processo.
 
-Dado que o funcionamento adequado deste módulo é necessário para a continuidade da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
+Dado que o funcionamento adequado deste módulo é necessário para a continuidade
+da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
 
-\paragraph{Serviço planejar automaticamente}
+\subsubsection{Serviço planejar automaticamente}
+
 \begin{itemize}
+
+    \item \textbf{Pré-requisitos:} O subsistema operacional já deve ter
+            recebido do subsistema de gestão estratégica o modelo do processo
+            para o qual se quer planejar.
+
 	\item \textbf{Entradas:} Demandas a que se deseja atender.
-	\item \textbf{Processamento:} Determinar a melhor alocação dos recursos para atender às novas tarefas e atualizar o modelo interno.
+
+    \item \textbf{Processamento:} Determinar a melhor alocação dos recursos
+            para atender às novas tarefas e atualizar o modelo interno.
+
 	\item \textbf{Saída:} Plano otimizado
+
 \end{itemize}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{seqplan}
+        \caption{Diagrama de sequência da elaboração automática do plano.\label{seqplan}}
+\end{figure}
+
+A Figura~\ref{seqplan} contém o diagrama de sequência da elaboração do plano
+para atendimento das demandas. Partindo de uma lista de demandas a serem
+atendidas, o algoritmo escolhe de forma gulosa executar a atividade que traga a
+maior variação positiva da métrica pertinente. Se, ao adicionar uma atividade
+ao plano, outras atividades forem habilitadas de acordo com a lógica de
+controle de fluxo do processo, são inseridas novas demandas para essas
+atividades na lista de demandas pendentes. Esta abordagem, cujo pseudocódigo é
+apresentado no Algoritmo~\ref{pseudoplan} consegue evitar muitos dos problemas
+de utilizar técnicas de planejamento clássico no problema de alocação de
+recursos, como a necessidade de se representar explicitamente o tempo das
+ações.~\cite{ghallab2016automated}
+
+O algoritmo proposto, porém, preserva algumas das hipóteses do planejamento
+clássico sobre a estrutura do processo:
+
+\begin{enumerate}
+    \item Determinismo das transições de estado.
+    \item Ambiente finito e estático.
+    \item Ambiente totalmente observável.
+    \item Planejamento offline (o agente não conhece o estado de execução).
+\end{enumerate}
+
+\begin{algorithm}[h]
+\caption{Determina a melhor próxima ação}\label{pseudoplan}
+\begin{algorithmic}[1]
+\Function{proximaAcao}{$instancias$, $inicio$}
+    \State{$melhorAcao \gets NULL$}
+    \While{$melhorAcao = NULL$}
+        \State{$candidatas \gets \text{atividades habilitadas em } instancias$}
+        \ForAll{$atividade \text{ in } candidatas$}
+            \State{$impossivelExecutar \gets False$}
+            \State{$papeisNecessarios \gets \text{papéis necessários para executar } atividade$}
+            \ForAll{$papel \text{ in } papeisNecessarios$}
+                \State{$papel.dominio \gets \text{recursos executores disponíveis para servir } papel \text{ em } inicio$}
+                \If{$papel.dominio.size = 0$}
+                    \State{$impossivelExecutar \gets True$}
+                \EndIf{}
+            \EndFor{}
+            \If{$impossivelExecutar$}
+            \State{\textbf{continue}}
+            \EndIf{}
+            \State{$metrica \gets atividade.processo.metricaPerformance()$}
+            \State{$melhoresCondicoes \gets otimizador.otimiza(atividade.getVariaveis(), metrica)$}
+            \State{$beneficioAcao \gets metrica(atividade, target)$}
+        \EndFor{}
+        \If{$melhorAcao = NULL$}
+            \State{$inicio \gets inicio + timeStep$}
+        \EndIf{}
+    \EndWhile{}
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
+
+Para determinar o impacto de adicionar uma atividade ao plano nas métricas, é
+preciso determinar o melhor valor, que a atividade pode ter nas condições em
+que é executada. Esse valor é estimado a partir do modelo preditivo do processo
+e variando-se seus parâmetros de controle, como os recursos que executarão a
+tarefa.
+
+A otimização do valor de uma atividade é um problema de otimização discreta e
+foi abordado utilizando busca local, mais precisamente escalada de gradiente
+com reinícios aleatórios~\cite{russell1995modern}. Para efeito de determinação
+dos passos possíveis no algoritmo, variáveis incontroláveis como o clima ou
+características do pedido são consideradas como se tivessem apenas um elemento
+em seus domínios: o valor desses parâmetros para a instância do processo em
+questão.
 
 \subsection{Módulo Medição} 
 
-Módulo responsável por recolher os dados
-advindos da execução do processo e calcular as métricas de performance do
-mesmo, de acordo com as especificações do negócio. Visto que os dados do
-processo vêm de fontes muito heterogêneas, se justifica um módulo que abstrai
-essa comunicação, oferecendo uma interface única para acesso às métricas.
+Módulo responsável por recolher os dados advindos da execução do processo e
+calcular as métricas de performance do mesmo, de acordo com as especificações
+do negócio. Visto que os dados do processo vêm de fontes muito heterogêneas, se
+justifica um módulo que abstrai essa comunicação, oferecendo uma interface
+única para acesso aos eventos.
 
-As decisões gerenciais a respeito da alocação de recursos e composição de
+As decisões gerenciais a respeito da alocação de recursos executores e composição de
 portfólio serão tomadas a partir dos dados gerados por este módulo, portanto é
 necessário garantir a segurança (safety) do mecanismo de coleta dos dados.
 
-\paragraph{Serviço relatar atividade realizada}
+\subsubsection{Serviço relatar eventos}
+
 \begin{itemize}
-	\item \textbf{Entradas:} Dados dos sensores da operação.
-	\item \textbf{Processamento:} Calcular métricas de qualidade e custo.
-	\item \textbf{Saída:} Registro de relatório da atividade.
+
+    \item \textbf{Pré-requisitos:} O subsistema operacional já deve ter
+            recebido do subsistema de gestão estratégica o modelo do processo
+            para o qual se quer planejar.
+
+	\item \textbf{Entradas:} Dados de eventos ocorridos.
+
+	\item \textbf{Processamento:} Agregar eventos em um estado global da operação.
+
+	\item \textbf{Saída:} Registro de estado das atividades.
+
 \end{itemize}
 
-\paragraph{Serviço informar instâncias finalizadas}
+Este serviço é utilizado por agentes externos, como um processo periódico, para
+relatar os novos eventos ocorridos na operação. Estes eventos são agregados em
+um banco de dados de atividades planejadas, em execução e finalizadas. Quando
+uma atividade final do processo é terminada, sua instância é movida para outo
+banco de dados, para ser reportada ao subsistema de gestão estratégica.
+
+\subsubsection{Serviço informar instâncias finalizadas}
+
 \begin{itemize}
-	\item \textbf{Entradas:} Processo a ser processado
-	\item \textbf{Processamento:} Enviar para o subsistema estratégico as informações sobre novas instâncias terminadas do processo.
+
+	\item \textbf{Entradas:} Processo a ser informado
+
+    \item \textbf{Processamento:} Enviar para o subsistema de gestão
+            estratégica as informações sobre novas instâncias terminadas do
+            processo.
+
 	\item \textbf{Saída:} Indicador de sucesso ou falha
+
 \end{itemize}
+
+Este serviço, também utilizado em geral por processos externos periódicos,
+realiza a operação de transmitir as instâncias finalizadas para o subsistema de
+gestão estratégica, através de uma chamada de rede.
 
 \subsection{Módulo Análise de Impacto}
 
 Módulo responsável por, utilizando o modelo do processo operacional, simular
 sua performance em cenários arbitrários, de forma a auxiliar a gerência
-operacional na estimativa de capacidade e otimização do portfólio de recursos,
+operacional na estimativa de capacidade e otimização do portfólio de recursos executores,
 a partir da simulação de cenários com mais ou menos recursos disponíveis.
 
-\paragraph{Serviço calcula relatório}
+\subsubsection{Serviço calcula relatório}
+
 \begin{itemize}
-	\item \textbf{Entradas:} Intervalo de tempo para o qual calcular os relatórios
-	\item \textbf{Processamento:} Calcular estatísticas de atraso de tarefas, utilização de recursos e eficiência, agregados no tempo.
-	\item \textbf{Saída:} Relatório de desempenho da operação no cenário especificado.
+
+    \item \textbf{Pré-requisitos:} Deve haver instâncias terminadas informadas
+            pelo subsistema operacional.
+
+    \item \textbf{Entradas:} Intervalo de tempo e processo para o qual calcular
+            os relatórios
+            
+    \item \textbf{Processamento:} Calcular estatísticas de atraso de tarefas,
+            utilização de recursos e eficiência, agregados no tempo.
+
+    \item \textbf{Saída:} Relatório de desempenho da operação no cenário
+            especificado.
+
 \end{itemize}
+
+O relatório, gerado com base no histórico de execução de tarefas e no modelo
+operacional, é composto pelos seguintes indicadores:
+
+\begin{enumerate}
+
+    \item \textbf{Grau de utilização dos recursos:} A razão entre o tempo que
+            cada recurso executor está alocado a uma tarefa e a soma da duração
+            de seus turnos no período. Este indicador pode revelar um
+            excesso de capacidade na operação.
+
+    \item \textbf{Importância relativa das variáveis de controle:} O modelo
+            preditivo do processo operacional é capaz de elencar a importância
+            de cada variável na predição. Se as predições obtidas forem
+            próximas da realidade, é esperado que essas variáveis tenham
+            graus semelhantes de impacto na performance da operação. Este
+            indicador pode guiar a elaboração de políticas de investimento
+            em melhorias.
+
+    \item \textbf{Estatísticas das métricas de desempenho especificadas:} Para
+            a métrica definida no processo, é relevante saber sua variação ao
+            longo do período indicado, seus valores máximo, médio e mínimo.
+            Isso permite avaliar o cumprimento de metas operacionais.
+
+\end{enumerate}
+

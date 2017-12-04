@@ -2,7 +2,7 @@
 
 O principal ponto de atenção que deve ser observado com relação à concorrência
 no projeto é a troca de dados entre os subsistemas operacional e gerencial. A
-comunicação entre processos é feita por HTTP, sendo o componente operacional
+comunicação entre processos é feita por HTTP, sendo o subsistema operacional
 que faz todas as requisições. Assim, o sistema exige apenas que esteja aberta a
 porta 80 no protocolo TCP para conexões de saída no firewall da fábrica, uma
 configuração que, por ser idêntica à utilizada para a web, é comumente

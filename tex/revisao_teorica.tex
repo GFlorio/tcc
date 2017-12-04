@@ -104,7 +104,7 @@ relevante para este trabalho é a descoberta, com objetivo de construir um
 modelo para prever o comportamento do processo em condições simuladas.
 
 
-\subsection{Modelos Preditivos de Performance de Processo}
+\subsection{Modelos Preditivos de Performance de Processo}\label{teo_pred}
 
 Baseado nas técnicas de mineração de processos, há um esforço na criação de
 modelos preditores de desempenho que sejam precisos e adaptáveis o bastante
@@ -155,8 +155,14 @@ utilizadas para estimar o valor de $m \in M$ em traços de instâncias
 incompletas são~\cite{van2016process}:
 
 \begin{enumerate}
-    \item Associar a cada estado do processo definido por um prefixo de um traço completo um estimador do valor mais provável que $m$ assumirá quando a instância estiver completa.
-    \item Estender o traço, criando eventos simulados de forma a completar a instância, calculando o indicador sobre o traço completo.
+
+    \item Associar a cada estado do processo, definido por um prefixo de um
+            traço completo, um estimador do valor mais provável que $m$ assumirá
+            quando a instância estiver completa.
+
+    \item Estender o traço, criando eventos simulados de forma a completar a
+            instância, calculando o indicador sobre o traço completo.
+
 \end{enumerate}
 
 A abordagem utilizada neste trabalho é da família 1, baseada em

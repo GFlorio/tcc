@@ -1,7 +1,106 @@
-\chapter{Estudo de caso e análise dos resultados}\label{resultados}
+\chapter{Estudo de caso}\label{resultados}
 
+Obteve-se os dados operacionais dos processos de manutenção preventiva de uma
+planta industrial no estado de São Paulo, cujo modelo segue o da
+Figura~\ref{preventiva}. Os dados referem-se aos meses de junho, julho e agosto
+de 2017, contendo informações a respeito de:
 
+\begin{enumerate}
+
+    \item Recursos que executaram as tarefas;
+
+    \item Máquinas que foram objeto da manutenção;
+
+    \item Natureza do trabalho (por exemplo: manutenção mecânica ou elétrica)
+
+    \item Data e hora de início e fim da instância do processo.
+
+    \item Esforço despendido nas tarefas.
+
+\end{enumerate}
+
+Este banco de dados não está no formato tradicional utilizado em mineração de
+processos de negócio, por estar orientado não a eventos, mas a instâncias. Para
+simplificar a análise dos resultados, escolheu-se um tipo de processo para
+avaliar: a manutenção mecânica de fornos elétricos de das áreas da fábrica. Um
+exemplo ilustrativo da estrutura do banco de dados estrutura encontra-se na
+Figura~\ref{exemplobanco}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{exemplo}
+	\caption{Exemplo ilustrativo da estrutura do banco de dados após limpeza.\label{exemplobanco}}
+\end{figure}
+
+A coluna `manutencionista' contém um código de identificação dado a cada
+recurso humano que atua na manutenção. A coluna `trabalho' é o esforço
+despendido na tarefa de manutenção, medido em minutos. As colunas de horário de
+início e fim se referem à duração total da instância, incluindo as tarefas de
+aquisição de ferramentas necessárias e locomoção até o local.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{trabreal}
+        \caption{Esforço médio despendido na tarefa de manutenção para cada manutencionista que a executou no período analisado.\label{trabreal}}
+\end{figure}
+
+Para avaliar o impacto que a aplicação do sistema de planejamento da alocação
+de recursos executores teria neste processo, é preciso validar a hipótese de
+que a escolha de recurso utilizado para executar as tarefas influencia na
+performance do processo. Neste caso, a métrica utilizada será a quantidade de
+trabalho despendido. A Figura~\ref{trabreal} mostra o esforço médio e seu
+desvio padrão para cada manutencionista analisado, para a tarefa escolhida.
+Como se pode verificar, não apenas a escolha de recurso implica, na média, em
+uma diferença no esforço despendido, como também na consistência dos resultados
+obtidos.
+
+A seguir, criou-se o modelo do processo operacional. Dadas as restrições nos
+dados disponíveis, o processo original foi simplificado em duas atividades,
+como demonstrado na Figura~\ref{simplificado}. A tarefa de preparação foi
+inclusa para poder considerar nas métricas a diferença entre a duração total da
+instância do processo e o esforço despendido na tarefa de manutenção de fato.
+Assim, a métrica definida associada a este processo foi a soma das durações das
+duas tarefas, equivalente à duração total da instância.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{simplificado}
+        \caption{Modelo simplificado do processo de manutenção preventiva para uso no sistema.\label{simplificado}}
+\end{figure}
+
+Treinando o modelo preditivo para a métrica de performance deste processo, com
+uso de validação cruzada em \textit{3-fold}, obteve-se um coeficiente de
+determinação $r^2~=~0.87$, considerável aceitável para o uso em planejamento.
 
 \chapter{Conclusões}
 
-**TODO**
+O sistema proposto obteve resultados positivos na predição da performance
+operacional do processo de manutenção preventiva mecânica dos fornos elétricos
+na planta industrial estudada. O processo estudado, por ser notoriamente
+simples, atendeu todas as hipóteses feitas a respeito de sua estrutura, e o
+estudo dos dados validou para este processo a hipótese implícita de influência
+das decisões de alocação de recursos executores no resultado operacional. O
+modelo preditivo proposto obteve um resultado aceitável para, a elaboração de
+planos de alocação. Porém, como não havia dados a respeito do planejamento das
+atividades, não foi possível testar a qualidade de planos gerados com base
+neste modelo.
+
+Os resultados obtidos revelam oportunidades de estudos futuros. A citar:
+
+\begin{itemize}
+
+    \item Análise das características dos processos onde sistemas como este
+            apresentam maior valor.
+
+    \item Melhorias no algoritmo de planejamento para relaxar hipóteses
+            estruturais feitas a respeito do processo operacional.
+
+    \item Análise da performance do modelo preditivo de desempenho em processos
+            mais complexos. Há evidências, como em
+                \citeonline{folino2012discovering}, de que pode ser necessário
+                um modelo mais complexo.
+
+    \item Adoção de um modelo sensível a risco para o planejamento, como o
+            proposto em \citeonline{freire2016extreme}
+
+\end{itemize}
