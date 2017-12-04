@@ -1,1 +1,26 @@
-\section{Análise dos }
+\section{Ponto de vista do desenvolvimento}
+
+O desenvolvimento será feito em Python. Com base nas bibliotecas
+Django~\cite{django} para as funcionalidades baseadas em web e
+Numpy~\cite{numpy} para cálculos numéricos. O estilo de código deve seguir o
+definido pelo PEP 8~\cite{pep8}.
+
+São obrigatórios testes funcionais a nível de serviço, ficando à discrição do
+desenvolvedor os locais mais oportunos para utilizar também testes unitários.
+
+\subsection{Arquitetura hexagonal} 
+
+A estrutura interna de cada módulo segue o padrão comumente denominado de
+\textit{arquitetura
+hexagonal}~\cite{cockburn_hexagonal}~\cite{fowler2015layering}, uma derivação
+da arquitetura clássica em três camadas que utiliza \textit{Data
+Mappers}~\cite{fowler2002patterns} para eliminar dos objetos de domínio a
+dependência da camada de acesso a dados. A estrutura geral deste padrão
+arquitetural pode ser observada na Figura~\ref{hexagonal}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[]{hexagonal}
+        \caption{Diagrama esquemático da arquitetura hexagonal. Adaptado de \citeonline{fowler2015layering}.\label{hexagonal}}
+\end{figure}
+

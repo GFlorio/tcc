@@ -5,26 +5,10 @@ do sistema em módulos, apresentados na Figura~\ref{pacotes} e definidos em
 detalhes a seguir. Os casos de uso que seguem o padrão \textit{CRUD} foram
 omitidos para preservar a clareza e relevância do modelo.
 
-\subsubsection{Arquitetura hexagonal} 
-
-A estrutura interna de cada módulo segue o padrão comumente denominado de
-\textit{arquitetura
-hexagonal}~\cite{cockburn_hexagonal}~\cite{fowler2015layering}, uma derivação
-da arquitetura clássica em três camadas que utiliza \textit{Data
-Mappers}~\cite{fowler2002patterns} para eliminar dos objetos de domínio a
-dependência da camada de acesso a dados. A estrutura geral deste padrão
-arquitetural pode ser observada na Figura~\ref{hexagonal}.
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[]{pacotes}
 	\caption{Diagrama de pacotes do sistema.\label{pacotes}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[]{hexagonal}
-        \caption{Diagrama esquemático da arquitetura hexagonal. Adaptado de \citeonline{fowler2015layering}.\label{hexagonal}}
 \end{figure}
 
 \subsection{Módulo Modelagem do Processo}
