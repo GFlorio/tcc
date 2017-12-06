@@ -3,13 +3,13 @@
 O modelo de referência para especificação de sistemas abertos de \textit{Big
 Data} apresentado em \citeonline{chang2015nist} foi utilizado para determinar
 as necessidades de armazenamento, processamento e transferência de dados neste
-projeto. O resultado do mapeamento da arquitetura pode ser observado na
+projeto. As características de cada módulo estão apresentados na
 Figura~\ref{nist}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{nist}
-	\caption{Resultado do mapeamento da arquitetura do projeto ao modelo NIST.\label{nist}}
+	\caption{Características do processamento e transmissão de dados nos módulos.\label{nist}}
 \end{figure}
 
 O modelo permite observar as características de latência e fluxo de informações
@@ -29,7 +29,7 @@ aspectos não funcionais relacionados à infraestrutura.
 
 Os módulos do subsistema operacional possuem bancos de dados separados. O
 subsistema de gestão estratégica possui, por razões descritas adiante, um banco
-de dados unificado. A estrutura estrutura lógica de cada um está definida em
+de dados unificado. A estrutura lógica de cada um está definida em
 seus diagramas de Entidade-Relacionamento nas
 figuras~\ref{ermod},~\ref{ermed}, e~\ref{eraloc}.
 
@@ -49,24 +49,24 @@ uma política de retenção de dados durante a operação do sistema, a ser defi
 de acordo com a disponibilidade de infraestrutura na implantação. Dado que é
 previsto que o armazenamento deste banco de dados seja uma das maiores fontes
 de custo operacional do sistema, optou-se por não duplicar os dados para os
-dois módulos do subsistema Gestão Estratégica mantendo-os acoplados pela camada
+dois módulos do subsistema Gestão Estratégica, mantendo-os acoplados pela camada
 de dados.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{ermod}
-	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do módulo Modelagem.\label{ermod}}
+	\caption{Diagrama de Entidade-Relacionamento em nível de implementação do módulo Modelagem.\label{ermod}}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{ermed}
-	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do módulo Medição.\label{ermed}}
+	\caption{Diagrama de Entidade-Relacionamento em nível de implementação do módulo Medição.\label{ermed}}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{eraloc}
-	\caption{Diagrama de Entidade-Relacionamento a nível de implementação do subsistema de Gestão Estratégica.\label{eraloc}}
+	\caption{Diagrama de Entidade-Relacionamento em nível de implementação do subsistema de Gestão Estratégica.\label{eraloc}}
 \end{figure}
 

@@ -1,9 +1,9 @@
 \section{Ponto de vista funcional}
 
-A partir dos requisitos definidos anteriormente, pode-se derivar uma separação
-do sistema em módulos, apresentados na Figura~\ref{pacotes} e definidos em
-detalhes a seguir. Os casos de uso que seguem o padrão \textit{CRUD} foram
-omitidos para preservar a clareza e relevância do modelo.
+A partir dos casos de uso definidos anteriormente, pode-se derivar uma
+separação do sistema em módulos, apresentados na Figura~\ref{pacotes} e
+definidos em detalhes a seguir. Os casos de uso que seguem o padrão
+\textit{CRUD} foram omitidos para preservar a clareza e relevância do modelo.
 
 \begin{figure}[h]
 	\centering
@@ -11,9 +11,12 @@ omitidos para preservar a clareza e relevância do modelo.
 	\caption{Diagrama de pacotes do sistema.\label{pacotes}}
 \end{figure}
 
+As principais funcionalidades do sistema estão contidas nos módulos
+\textit{Modelagem do Processo}, no qual é definido o modelo preditivo de performance da operação e \textit{Alocação}, no qual é realizado o planejamento da alocação dos recursos.
+
 \subsection{Módulo Modelagem do Processo}
 
-Este módulo é responsável por gerar o modelo computacional do processo
+Este módulo é responsável por gerar o modelo preditivo do processo
 operacional a partir da estrutura do processo e da informação sobre os instâncias
 passadas do processo. O modelo gerado será, então, utilizado como base para as
 outras funções do sistema, como o planejamento automático e a geração de
@@ -31,7 +34,7 @@ relatórios.
     \item \textbf{Processamento:} Modelagem do processo de forma a tornar
             computacionalmente eficiente a simulação e análise.
 
-	\item \textbf{Saída:} Modelo da operação.
+	\item \textbf{Saída:} Modelo preditivo da operação.
 
 \end{itemize}
 
@@ -45,15 +48,17 @@ obtidos para a métrica definida.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{seqmod}
-        \caption{Diagrama de sequência da geração do modelo operacional.\label{seqmod}}
+    \caption{Diagrama de sequência da geração do modelo operacional.\label{seqmod}}
 \end{figure}
 
-Para o modelo de predição, foi utilizada a implementação da biblioteca
-\textit{scikit-learn}~\cite{scikit-learn} do algoritmo \textit{random
-forest}~\cite{breiman2001random}. A escolha por este algoritmo foi feita por
-causa de sua alta interpretabilidade por humanos e capacidade de elencar a
-importância relativa das variáveis de entrada para a predição, baseado nas
-posições das decisões que as envolvem em cada árvore do conjunto.
+Para o modelo de predição da performance da operação, foi utilizada a
+implementação da biblioteca \textit{scikit-learn}~\cite{scikit-learn} do modelo
+de floresta aleatória (\textit{random forest})~\cite{breiman2001random}. A
+escolha por este modelo foi feita por causa de sua alta interpretabilidade por
+humanos e capacidade de elencar a importância relativa das variáveis de entrada
+para a predição, baseado nas posições das decisões que as envolvem em cada
+árvore do conjunto. A Subseção~\ref{randomForest} detalha o funcionamento deste
+modelo.
 
 Para capturar comportamentos periódicos, quaisquer variáveis que representem
 momentos no tempo são decompostas em:
@@ -70,25 +75,53 @@ na captura de tendências permanentes, seria preciso dados de muitos anos para
 fazê-lo.
 
 A especificação das métricas de performance operacional é feita através de
-expressões em notação polonesa, onde se pode especificar nomes de variáveis
-que, quando a métrica for calculada, serão substituídas pelo valor da variável
-na instância pertinente. Por exemplo, uma métrica de custo do trabalho para um
-processo de manutenção pode ser especificada:
+expressões numéricas onde se pode especificar nomes de variáveis que, quando a
+métrica for calculada interpretada e calculada, serão substituídas pelo valor
+da variável na instância pertinente. O interpretador de expressões implementado
+utiliza notação polonesa. Uma exemplo de métrica possível é o custo do
+trabalho para um processo de manutenção, que  pode ser especificada como:
 
 \textit{\centering custoTrabalho = * manutencionista.custoHora + horasEsforco
 horasLocomocao}
 
-Uma instância do processo que exigiu 1 hora de locomoção 2 horas de esforço e
-foi executada por um recurso que custa R\$25,00 por hora teria o valor $25.00 *
-(1 + 2) = 75.00$.
+Neste exemplo, uma instância do processo que exigiu 1 hora de locomoção, 2
+horas de esforço e foi executada por um recurso que custa R\$25,00 por hora
+teria o valor $25.00 * (1 + 2) = 75.00$.
 
+\subsubsection{Florestas Aleatórias}\label{randomForest}
+
+O algoritmo utiliza um conjunto de árvores de decisão, cada uma treinada com
+base em uma parte dos dados. Cada árvore é construída a partir de uma amostra
+aleatória dos dados, e cada divisão é realizada em base em apenas um
+subconjunto das variáveis de entrada (\textit{features}) disponíveis. Para
+predição,  a saída do algoritmo é considerada como sendo a média das saídas das
+árvores. Um exemplo de árvore de decisão gerada com os dados do estudo de caso
+realizado neste trabalho está representada na Figura~\ref{arvore}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{arvore}
+        \caption{Grafo representando uma árvore de decisão gerada com os dados do estudo de caso.\label{arvore}}
+\end{figure}
+
+Cada nó não terminal da Figura~\ref{arvore} representa uma decisão a ser tomada
+para determinação do valor final, enquanto os nós terminais representam valores
+que a função pode assumir. As informações representadas em cada nó são:
+
+\begin{enumerate}
+    \item Opcionalmente, o teste a ser feito;
+    \item O erro médio quadrático de representação das amostras que pertencem ao nó com o valor do nó;
+    \item O número de amostras que pertencem ao nó;
+    \item O valor numérico associado ao nó para a função alvo.
+\end{enumerate}
 
 \subsection{Módulo Alocação}
 
 Este módulo é responsável por utilizar o modelo do processo operacional da
-fábrica criado anteriormente para decidir a alocação ótima dos recursos executores para
-atender a uma dada demanda, considerando a sua disponibilidade, características
-específicas das tarefas habilitadas e a eficiência de longo prazo do processo.
+fábrica criado anteriormente para decidir a alocação ótima dos recursos
+executores para atender a uma dada demanda, considerando a sua disponibilidade,
+características específicas das tarefas habilitadas e a eficiência de longo
+prazo do processo.
 
 Dado que o funcionamento adequado deste módulo é necessário para a continuidade
 da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
@@ -118,15 +151,15 @@ da operação, garantir sua disponibilidade é um aspecto crítico do projeto.
 
 A Figura~\ref{seqplan} contém o diagrama de sequência da elaboração do plano
 para atendimento das demandas. Partindo de uma lista de demandas a serem
-atendidas, o algoritmo escolhe de forma gulosa executar a atividade que traga a
-maior variação positiva da métrica pertinente. Se, ao adicionar uma atividade
-ao plano, outras atividades forem habilitadas de acordo com a lógica de
-controle de fluxo do processo, são inseridas novas demandas para essas
-atividades na lista de demandas pendentes. Esta abordagem, cujo pseudocódigo é
-apresentado no Algoritmo~\ref{pseudoplan} consegue evitar muitos dos problemas
-de utilizar técnicas de planejamento clássico no problema de alocação de
-recursos, como a necessidade de se representar explicitamente o tempo das
-ações.~\cite{ghallab2016automated}
+atendidas, o algoritmo escolhe de forma gulosa (\textit{greedy}) executar a
+atividade que traga a maior variação positiva da métrica pertinente. Se, ao
+adicionar uma atividade ao plano, outras atividades forem habilitadas de acordo
+com a lógica de controle de fluxo do processo, são inseridas novas demandas
+para essas atividades na lista de demandas pendentes. Esta abordagem, cujo
+pseudocódigo é apresentado no Algoritmo~\ref{pseudoplan} consegue evitar muitos
+dos problemas de utilizar técnicas de planejamento clássico no problema de
+alocação de recursos, como a necessidade de se representar explicitamente o
+tempo das ações.~\cite{ghallab2016automated}
 
 O algoritmo proposto, porém, preserva algumas das hipóteses do planejamento
 clássico sobre a estrutura do processo:

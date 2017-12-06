@@ -1,6 +1,16 @@
 \chapter{Revisão Teórica}\label{teoria}
 
+Este capítulo tem o objetivo de apresentar a base conceitual necessária para a
+compreensão do trabalho e as abordagens adotadas por trabalhos relacionados
+para os problemas envolvidos no desenvolvimento no sistema.
+
 \section{Gerência de operações}
+
+A área, ou função, de operações, é a parte de uma empresa dedicada à produção e
+entrega de bens e serviços para seus clientes. Gerência de operações é a
+atividade de administrar os recursos que executam essas tarefas~\cite[p.
+4]{slack2010operations}. As próximas subseções buscam formalizar alguns dos
+conceitos relacionados a gerência de operações relevantes para este trabalho.
 
 \subsection{Operações como sistema de transformação}
 
@@ -55,9 +65,9 @@ atividades serão, pela maior parte deste trabalho, simplesmente tratadas por
 
 Para guiar as decisões envolvidas no planejamento, são definidas metas
 relacionadas a indicadores de performance da operação, cujas características
-variam com o tempo. Planos a longo prazo utilizam indicadores agregados de
+variam com o tempo. Planos em longo prazo utilizam indicadores agregados de
 natureza tipicamente financeira, dado que a incerteza da demanda é grande
-demais para realizar previsões detalhadas dos acontecimentos. A curto e médio
+demais para realizar previsões detalhadas dos acontecimentos. Em curto e médio
 prazo, quando a demanda já é conhecida ou mais facilmente prevista, são
 utilizados indicadores mais granulares, tipicamente mais relacionados à
 qualidade do serviço prestado pela operação. Indicadores de performance para
@@ -72,14 +82,15 @@ A execução de um processo de negócio, explícito ou implícito, em ambiente
 corporativo gera traços no formato de um log de eventos, seja por razões de
 controle ou de auditoria. O objetivo da mineração de processos de negócio é
 derivar automaticamente um modelo do processo a partir dos dados de eventos
-gerados por um outro sistema de informação corporativo~\cite{van2016process}.
-Este modelo pode, então, ser utilizado para responder questões a respeito da
-estrutura, da performance e da conformidade do processo a normas estabelecidas.
-A abordagem de construção automática a partir de dados tem o benefício de gerar
-um modelo que é, em geral, mais aderente à realidade do que o gerado
-manualmente. Uma vez que o modelo formal é gerado, podem ser criadas
-representações dele em diferentes níveis de abstração e detalhe, para
-comunicação aos \textit{stakeholders}, sem perder essa propriedade.
+gerados por um ou mais outros sistemas de informação
+corporativos~\cite{van2016process}.  Este modelo pode, então, ser utilizado para
+responder questões a respeito da estrutura, da performance e da conformidade do
+processo a normas estabelecidas.  A abordagem de construção automática a partir
+de dados tem o benefício de gerar um modelo que é, em geral, mais aderente à
+realidade do que o gerado manualmente. Uma vez que o modelo formal é gerado,
+podem ser criadas representações dele em diferentes níveis de abstração e
+detalhe, para comunicação aos \textit{stakeholders}, sem perder essa
+propriedade.
 
 \begin{figure}[h]
 	\centering

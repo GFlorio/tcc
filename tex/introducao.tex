@@ -17,18 +17,24 @@ gerencial das corporações.  Experimentos realizados em
 \citeonline{gombolay2015decision} com times híbridos de humanos e robôs, em
 ambiente acadêmico controlado simulando uma linha de produção, verificaram o
 impacto da introdução de elementos automáticos na distribuição e coordenação do
-trabalho.  Os resultados, apresentados na Figura~\ref{graficoMIT}, mostram que
-a automação da distribuição do trabalho trouxe ganhos de eficiência operacional
-e, mais acentuadamente, gerencial, resultante da tomada de decisões melhores e
-em menor tempo.
+trabalho. O estudo utilizou uma linha de produção simulada em que um grupo de
+três pessoas deveriam executar uma série de atividades para construir um objeto
+a partir de partes mais simples. Quanto à alocação de recursos às tarefas, os
+experimentos foram divididos em três tipo: manual, semi autônoma (na qual um
+computador realiza o planejamento e um humano revisa o plano antes da execução)
+e totalmente autônoma. Os resultados, apresentados na Figura~\ref{graficoMIT},
+mostram que a automação da distribuição do trabalho trouxe ganhos de eficiência
+operacional e, mais acentuadamente, gerencial, resultante da tomada de decisões
+melhores e em menor tempo.
 
-O impacto econômico da adoção desse tipo de tecnologia pode ser estimado tendo
-em vista que, em média, 54 por cento do tempo produtivo de gerentes de todos os
-níveis é gasto em atividades de coordenação e controle de
-recursos~\cite{accenture}, e que ferramentas de automação poderiam diminuir
-essa proporção para 25 por cento~\cite{accenture}, liberando aproximadamente 50
-homens-hora por mês de cada gerente, além de possíveis ganhos operacionais
-derivados da melhor qualidade e maior consistência das decisões.
+O impacto econômico da adoção de tecnologia de auxílio ao planejamento de
+alocação de recursos pode ser estimado tendo em vista que, em média, 54 por
+cento do tempo produtivo de gerentes de todos os níveis é gasto em atividades
+de coordenação e controle de recursos~\cite{accenture}, e que ferramentas de
+automação poderiam diminuir essa proporção para 25 por cento~\cite{accenture},
+liberando aproximadamente 50 homens-hora por mês de cada gerente, além de
+possíveis ganhos operacionais derivados da melhor qualidade e maior
+consistência das decisões.
 
 Assim, um caminho viável para realizar parte dos ganhos econômicos previstos é
 através de tecnologia de automação de decisão na gestão de operações, o que
@@ -37,7 +43,7 @@ justifica o desafio técnico de desenvolver tais tecnologias.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{resultadosMIT}
-	\caption{Resultados da inserção de elementos automáticos na gerência~\cite{gombolay2015decision}.\label{graficoMIT}}
+	\caption{Resultados da inserção de elementos automáticos na gerência. Adaptado de \citeonline{gombolay2015decision}.\label{graficoMIT}}
 \end{figure}
 
 \section{Objetivos}
@@ -58,8 +64,15 @@ Para atingir tais objetivos, o projeto de software se baseará nas técnicas
 apresentadas em \citeonline{rozanski2011software} para instanciar a arquitetura
 de referência para sistemas abertos de big data apresentada em
 \citeonline{chang2015nist}. O problema da otimização de processos será tratado
-utilizando-se técnicas de planejamento automático, como descrito em
-\citeonline{ghallab2016automated}.
+utilizando-se técnicas inteligência artificial, como descrito em
+\citeonline{russell1995modern}.
+
+Será utilizado um modelo preditivo da performance da operação, obtido a partir
+da aplicação de métodos de aprendizagem de máquina nas informações geradas na
+execução do processo operacional para estimar os efeitos futuros das decisões
+tomadas pelo sistema. Utilizando-se então os resultados do modelo preditivo
+como heurística, será aplicado um algoritmo de busca para realizar o
+planejamento.
 
 \section{Metodologia}
 
@@ -78,13 +91,13 @@ e perspectivas~\cite{rozanski2011software}.
 
 \subsection{Correspondência entre os modelos}
 
-Os sete pontos de vista propostos em \citeonline{rozanski2011software} e ilustrados na Figura~\ref{rozanski} são
-associados aos elementos do modelo de \citeonline{hevner2007three} da seguinte
-forma:
+Os sete pontos de vista propostos em \citeonline{rozanski2011software} e
+ilustrados na Figura~\ref{rozanski} são associados aos elementos do modelo de
+\citeonline{hevner2007three} da seguinte forma:
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[]{visoesrozanski}
+	\includegraphics[height=10cm]{visoesrozanski}
         \caption{Pontos de vista utilizados na especificação da arquitetura. Adaptado de \citeonline{rozanski2011software}\label{rozanski}}
 \end{figure}
 
@@ -115,12 +128,12 @@ Estes aspectos estão presentes nos pontos de vista Funcional, Informação,
 Concorrência, Desenvolvimento, Implantação e Operação, além das diferentes
 perspectivas de qualidade consideradas neste trabalho. Destes pontos de vista,
 Implantação e Operação estão presentes apenas como propostas para atender os
-requisitos não-funcionais, não sendo efetivamente implementados.  
+requisitos não-funcionais, não sendo efetivamente implementados.
 
 
 \section{Estrutura do trabalho}
 
-Esta monografia está organizada em seis capítulos. O primeiro apresentou o
+Esta monografia está organizada em cinco capítulos. O primeiro apresentou o
 problema tratado, os objetivos que se espera atingir e a metodologia adotada
 para tal.
 
@@ -131,9 +144,9 @@ No terceiro capítulo, é apresentado o contexto onde a aplicação se insere,
 resultando na especificação de requisitos e, em seguida, o modelo
 do sistema proposto para atender esses requisitos.
 
-O quarto capítulo consiste na aplicação do software construído em um processo
-simulado a partir de dados do processo de manutenção preventiva de uma grande
-empresa brasileira da área de manufatura industrial de bens intermediários.
+O quarto capítulo consiste na aplicação do software construído em dados do
+processo de manutenção preventiva de uma grande empresa brasileira da área de
+manufatura industrial de bens intermediários.
 
 O quinto capítulo analisa os resultados obtidos no experimento realizado e
 propõe melhorias para trabalhos subsequentes.

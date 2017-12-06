@@ -1,13 +1,41 @@
 \chapter{Desenvolvimento do Projeto}
 
+Neste capítulo estão apresentados aspectos do projeto desenvolvido, segundo os
+pontos de vista definidos em \citeonline{rozanski2011software}:
+
+\begin{itemize}
+
+    \item O ponto de vista do contexto define o ambiente com o qual o sistema
+            deve interagir e como é esperado que ele impacte este ambiente.
+
+    \item O ponto de vista funcional trata dos elementos funcionais envolvidos
+            na realização do impacto descrito no ponto de vista do contexto,
+            incluindo os algoritmos e técnicas utilizadas.
+
+    \item O ponto de vista da informação descreve a forma como o sistema
+            armazena, manipula e distribui informação.
+
+    \item O ponto de vista da concorrência trata dos aspectos de coordenação e
+            controle das unidades funcionais.
+
+    \item O ponto de vista da implantação descreve como as unidades funcionais
+            são mapeadas a unidades físicas e seus os requisitos de hardware.
+
+    \item O ponto de vista operacional trata da instalação e administração do
+            sistema uma vez implantado. Este ponto de vista, por não se aplicar
+            ao trabalho acadêmico, foi omitido da especificação
+
+\end{itemize}
+
 \section{Contexto da aplicação}
 
-Este sistema atua essencialmente na camada gerencial da operação, tornando o
-projeto deste, até certo ponto, agnóstico do processo operacional que será
-gerido. Para efeito de exemplificação, porém, será utilizado um processo de
-referência para manutenção preventiva em uma planta industrial, demonstrado na
-Figura~\ref{preventiva}. A escolha deste processo se deu por sua relativa
-simplicidade e a fácil observação do valor que o sistema agrega neste contexto.
+O sistema Alcatraz atua essencialmente na camada gerencial da operação,
+tornando o projeto deste, até certo ponto, agnóstico do processo operacional
+que será gerido. Para efeito de exemplificação, porém, será utilizado um
+processo de referência para manutenção preventiva em uma planta industrial,
+apresentado na Figura~\ref{preventiva}. A escolha deste processo se deu por sua
+relativa simplicidade e a fácil observação do valor que o sistema agrega neste
+contexto.
 
 \begin{figure}[h]
 	\centering
@@ -20,13 +48,13 @@ em \citeonline{slack2010operations}, pode-se derivar as seguintes métricas para
 controle de performance:
 
 \begin{itemize}
-	\item Qualidade, como definido em \citeonline{wu2005preventive}.
+        \item Qualidade, relacionada à proporção entre as falhas (faults) encontradas nos equipamentos examinados e o esperado pelos modelos de falha dos mesmos, como definido em \citeonline{wu2005preventive}.
 	\item Custo, relacionado à quantidade de tempo que os recursos necessários para a tarefa ficam alocados para a sua realização.
 	\item Lead Time, o tempo entre a identificação da necessidade de manutenção em um equipamento e o final desta manutenção.
 \end{itemize}
 
 O processo representado na Figura~\ref{preventiva} explicita o principal ator
-que deve interagir com o sistema: O gerente da operação. Para este ator, que
+que deve interagir com o sistema: O gerente operacional. Para este ator, que
 realiza suas atividades de dentro da fábrica, o sistema auxilia na fase de
 alocação de recursos executores às tarefas, fornecendo boas sugestões de planos
 de alocação para atender às necessidades da operação.
