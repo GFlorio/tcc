@@ -203,13 +203,13 @@ clássico sobre a estrutura do processo:
             \State{$inicio \gets inicio + timeStep$}
         \EndIf{}
     \EndWhile{}
-    \Return{$melhorAcao$}
+        \State{\Return{$melhorAcao$}}
 \EndFunction{}
 \end{algorithmic}
 \end{algorithm}
 
 Para determinar o impacto de adicionar uma atividade ao plano nas métricas, é
-preciso determinar o melhor valor, que a atividade pode ter nas condições em
+preciso determinar o melhor valor que a atividade pode ter nas condições em
 que é executada. Esse valor é estimado a partir do modelo preditivo do processo
 e variando-se seus parâmetros de controle, como os recursos que executarão a
 tarefa.
