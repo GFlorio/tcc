@@ -194,7 +194,7 @@ clássico sobre a estrutura do processo:
             \State{$metrica \gets atividade.processo.metricaPerformance()$}
             \State{$melhoresCondicoes \gets otimizador.otimiza(atividade.getVariaveis(), metrica)$}
             \State{$beneficioAcao \gets metrica(atividade, target)$}
-            \If{$beneficioAcao > melhorAcao$}
+            \If{$beneficioAcao > maiorBeneficio$}
                 \State{$melhorAcao \gets Acao(atividade, melhoresCondicoes)$}
                 \State{$maiorBeneficio \gets beneficioAcao$}
             \EndIf{}
