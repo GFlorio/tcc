@@ -176,6 +176,7 @@ clássico sobre a estrutura do processo:
 \begin{algorithmic}[1]
 \Function{proximaAcao}{$instancias$, $inicio$}
     \State{$melhorAcao \gets NULL$}
+    \State{$maiorBeneficio \gets 0$}
     \While{$melhorAcao = NULL$}
         \State{$candidatas \gets \text{atividades habilitadas em } instancias$}
         \ForAll{$atividade \text{ in } candidatas$}
@@ -193,11 +194,16 @@ clássico sobre a estrutura do processo:
             \State{$metrica \gets atividade.processo.metricaPerformance()$}
             \State{$melhoresCondicoes \gets otimizador.otimiza(atividade.getVariaveis(), metrica)$}
             \State{$beneficioAcao \gets metrica(atividade, target)$}
+            \If{$beneficioAcao > melhorAcao$}
+                \State{$melhorAcao \gets Acao(atividade, melhoresCondicoes)$}
+                \State{$maiorBeneficio \gets beneficioAcao$}
+            \EndIf{}
         \EndFor{}
         \If{$melhorAcao = NULL$}
             \State{$inicio \gets inicio + timeStep$}
         \EndIf{}
     \EndWhile{}
+    \Return{$melhorAcao$}
 \EndFunction{}
 \end{algorithmic}
 \end{algorithm}
